@@ -16,6 +16,13 @@ interface ResponseInterface extends ArrayableInterface
 
     public function status(): int;
 
+    public function header(string $name): ?string;
+
+    /**
+     * @return array<string, array<int, string>>
+     */
+    public function headers(): array;
+
     /**
      * @return array<string, mixed>
      */

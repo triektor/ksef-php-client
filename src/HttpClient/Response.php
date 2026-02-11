@@ -48,6 +48,21 @@ final class Response implements ResponseInterface
         return $this->statusCode;
     }
 
+    public function header(string $name): ?string
+    {
+        if ( ! $this->baseResponse->hasHeader($name)) {
+            return null;
+        }
+
+        return $this->baseResponse->getHeaderLine($name);
+    }
+
+    public function headers(): array
+    {
+        /** @var array<string, array<int, string>> */
+        return $this->baseResponse->getHeaders();
+    }
+
     public function body(): string
     {
         return $this->contents;

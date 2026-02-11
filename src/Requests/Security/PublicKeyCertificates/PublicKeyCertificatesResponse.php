@@ -55,6 +55,16 @@ final class PublicKeyCertificatesResponse implements PublicKeyCertificatesRespon
         return $this->response->status();
     }
 
+    public function header(string $name): ?string
+    {
+        return $this->response->header($name);
+    }
+
+    public function headers(): array
+    {
+        return $this->response->headers();
+    }
+
     public function json(): array
     {
         return $this->response->json();

@@ -33,6 +33,16 @@ final class OpenAndSendResponse implements OpenAndSendResponseInterface
         return $this->openResponse->status();
     }
 
+    public function header(string $name): ?string
+    {
+        return $this->openResponse->header($name);
+    }
+
+    public function headers(): array
+    {
+        return $this->openResponse->headers();
+    }
+
     public function json(): array
     {
         return $this->openResponse->json();
