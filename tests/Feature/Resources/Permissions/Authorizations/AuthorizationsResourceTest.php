@@ -159,7 +159,7 @@ test('send the RR invoice as NIP_1 as Podmiot2, check for UPO and generate QR co
 
     expect($qrCodes->code1->raw)->toBeString();
 
-    /** @var object{permissions: array<int, object{id: string, permissionScope: string}>} $queryResponse */
+    /** @var object{authorizationGrants: array<int, object{id: string, authorizationScope: string}>} $queryResponse */
     $queryResponse = $client->permissions()->query()->authorizations()->grants([
         'queryType' => 'Received',
         'authorizingIdentifierGroup' => [
