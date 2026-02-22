@@ -30,7 +30,6 @@ use N1ebieski\KSEFClient\ValueObjects\Requests\XmlNamespace;
 final class FakturaRRWiersz extends AbstractDTO implements DomSerializableInterface
 {
     /**
-     * @param NrWierszaFa $nrWierszaFa
      * @param P_5 $p_5 Nazwa nabytego produktu rolnego lub nabytej usługi rolniczej.
      * @param P_6A $p_6A Jednostka miary nabytego produktu rolnego lub nabytej usługi rolniczej.
      * @param P_6B $p_6B Ilość nabytego produktu rolnego lub nabytej usługi rolniczej.
@@ -45,8 +44,6 @@ final class FakturaRRWiersz extends AbstractDTO implements DomSerializableInterf
      * @param Optional|GTIN $gtin Globalny numer jednostki handlowej.
      * @param Optional|PKWiU $pkwiu Symbol Polskiej Klasyfikacji Wyrobów i Usług
      * @param Optional|CN $cn Symbol Nomenklatury Scalonej
-     * @param Optional|StanPrzed $stanPrzed
-     * @param Optional|KursWaluty $kursWaluty
      */
     public function __construct(
         public readonly NrWierszaFa $nrWierszaFa,
@@ -79,6 +76,7 @@ final class FakturaRRWiersz extends AbstractDTO implements DomSerializableInterf
 
         $nrWierszaFa = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'NrWierszaFa');
         $nrWierszaFa->appendChild($dom->createTextNode((string) $this->nrWierszaFa));
+
         $fakturaRRWiersz->appendChild($nrWierszaFa);
 
         if ($this->uu_id instanceof UU_ID) {
@@ -95,6 +93,7 @@ final class FakturaRRWiersz extends AbstractDTO implements DomSerializableInterf
 
         $p_5 = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'P_5');
         $p_5->appendChild($dom->createTextNode((string) $this->p_5));
+
         $fakturaRRWiersz->appendChild($p_5);
 
         if ($this->gtin instanceof GTIN) {
@@ -117,34 +116,42 @@ final class FakturaRRWiersz extends AbstractDTO implements DomSerializableInterf
 
         $p_6A = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'P_6A');
         $p_6A->appendChild($dom->createTextNode((string) $this->p_6A));
+
         $fakturaRRWiersz->appendChild($p_6A);
 
         $p_6B = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'P_6B');
         $p_6B->appendChild($dom->createTextNode((string) $this->p_6B));
+
         $fakturaRRWiersz->appendChild($p_6B);
 
         $p_6C = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'P_6C');
         $p_6C->appendChild($dom->createTextNode((string) $this->p_6C));
+
         $fakturaRRWiersz->appendChild($p_6C);
 
         $p_7 = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'P_7');
         $p_7->appendChild($dom->createTextNode((string) $this->p_7));
+
         $fakturaRRWiersz->appendChild($p_7);
 
         $p_8 = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'P_8');
         $p_8->appendChild($dom->createTextNode((string) $this->p_8));
+
         $fakturaRRWiersz->appendChild($p_8);
 
         $p_9 = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'P_9');
         $p_9->appendChild($dom->createTextNode((string) $this->p_9->value));
+
         $fakturaRRWiersz->appendChild($p_9);
 
         $p_10 = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'P_10');
         $p_10->appendChild($dom->createTextNode((string) $this->p_10));
+
         $fakturaRRWiersz->appendChild($p_10);
 
         $p_11 = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'P_11');
         $p_11->appendChild($dom->createTextNode((string) $this->p_11));
+
         $fakturaRRWiersz->appendChild($p_11);
 
         if ($this->stanPrzed instanceof StanPrzed) {

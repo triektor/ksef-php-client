@@ -7,31 +7,18 @@ namespace N1ebieski\KSEFClient\DTOs\Requests\Sessions\FakturaRR;
 use DOMDocument;
 use DOMElement;
 use N1ebieski\KSEFClient\Contracts\DomSerializableInterface;
-use N1ebieski\KSEFClient\DTOs\Requests\Sessions\FakturaRR\DaneFaKorygowanej;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\FakturaRR\DodatkowyOpis;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\FakturaRR\Platnosc;
-use N1ebieski\KSEFClient\DTOs\Requests\Sessions\FakturaRR\Podmiot1K;
-use N1ebieski\KSEFClient\DTOs\Requests\Sessions\FakturaRR\Podmiot2K;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\FakturaRR\Rozliczenie;
 use N1ebieski\KSEFClient\Support\AbstractDTO;
 use N1ebieski\KSEFClient\Support\Optional;
 use N1ebieski\KSEFClient\Validator\Rules\Array\MaxRule;
 use N1ebieski\KSEFClient\Validator\Validator;
-use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FakturaRR\NrFaKorygowany;
-use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FakturaRR\P_11_1;
-use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FakturaRR\P_11_1W;
-use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FakturaRR\P_11_2;
-use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FakturaRR\P_11_2W;
-use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FakturaRR\P_12_1;
-use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FakturaRR\P_12_1W;
-use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FakturaRR\P_12_2;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FakturaRR\P_1M;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FakturaRR\P_4A;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FakturaRR\P_4B;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FakturaRR\P_4C;
-use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FakturaRR\PrzyczynaKorekty;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FakturaRR\RodzajFaktury;
-use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FakturaRR\TypKorekty;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\KodWaluty;
 use N1ebieski\KSEFClient\ValueObjects\Requests\XmlNamespace;
 
@@ -55,7 +42,6 @@ final class FakturaRR extends AbstractDTO implements DomSerializableInterface
     /**
      * @param P_4B $p_4B Data wystawienia faktury VAT RR/ faktury VAT RR KOREKTA. Podaje się: datę wystawienia faktury VAT RR, o której mowa w art. 116 ust. 2 pkt 4 ustawy lub datę wystawienia faktury VAT RR KOREKTA, o której mowa w art. 116 ust. 5e pkt 1 ustawy w formacie RRRR-MM-DD (np. 2026-04-01).
      * @param P_4C $p_4C Kolejny numer faktury VAT RR, o którym mowa w art. 116 ust. 2 pkt 4 ustawy/ faktury VAT RR KOREKTA, o którym mowa w art. 116 ust. 5e pkt 1 ustawy.
-     * @param RodzajFaktury $rodzajFaktury
      * @param Optional|array<int, DokumentZaplaty> $dokumentZaplaty Dane dokumentu/-ów zapłaty [element opcjonalny]. Element zawierający dane (tj. numer, data) dokumentu/-ów potwierdzającego/-ych zapłatę zaliczki lub stwierdzającego/-ych dokonanie zapłaty za nabyte produkty rolne lub usługi rolnicze
      * @param Optional|array<int, DodatkowyOpis> $dodatkowyOpis Element przeznaczony dla wykazywania dodatkowych danych na fakturze VAT RR/ fakturze VAT RR KOREKTA, w tym wymaganych przepisami prawa, dla których nie przewidziano innych pól/elementów
      * @param Optional|array<int, FakturaRRWiersz> $fakturaRRWiersz Szczegółowe pozycje faktury VAT RR/faktury VAT RR KOREKTA. Element zawierający informacje dotyczące nabywanego produktu rolnego lub usługi rolniczej m.in. nazwę produktu lub usługi, jednostkę miary, ilość, stawkę i kwotę zryczałtowanego zwrotu podatku.
@@ -105,6 +91,7 @@ final class FakturaRR extends AbstractDTO implements DomSerializableInterface
 
         $kodWaluty = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'KodWaluty');
         $kodWaluty->appendChild($dom->createTextNode((string) $this->kodWaluty));
+
         $fakturaRR->appendChild($kodWaluty);
 
         if ($this->p_1M instanceof P_1M) {
@@ -121,10 +108,12 @@ final class FakturaRR extends AbstractDTO implements DomSerializableInterface
 
         $p_4B = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'P_4B');
         $p_4B->appendChild($dom->createTextNode((string) $this->p_4B));
+
         $fakturaRR->appendChild($p_4B);
 
         $p_4C = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'P_4C');
         $p_4C->appendChild($dom->createTextNode((string) $this->p_4C));
+
         $fakturaRR->appendChild($p_4C);
 
         /** @var DOMElement $p_11_1Group */
@@ -143,6 +132,7 @@ final class FakturaRR extends AbstractDTO implements DomSerializableInterface
 
         $rodzajFaktury = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'RodzajFaktury');
         $rodzajFaktury->appendChild($dom->createTextNode((string) $this->rodzajFaktury->value));
+
         $fakturaRR->appendChild($rodzajFaktury);
 
         if ($this->korektaGroup instanceof KorektaGroup) {

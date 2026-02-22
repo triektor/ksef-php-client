@@ -21,7 +21,7 @@ final class IPKSeF extends AbstractValueObject implements ValueAwareInterface, S
         Validator::validate($value, [
             new MinRule(1),
             new MaxRule(13),
-            new RegexRule('/^[0-9]{3}[a-zA-Z0-9]{10}$/')
+            new RegexRule('/^\d{3}[a-zA-Z0-9]{10}$/')
         ]);
 
         $this->value = $value;

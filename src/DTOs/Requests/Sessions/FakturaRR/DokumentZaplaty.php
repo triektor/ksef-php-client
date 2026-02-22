@@ -34,6 +34,7 @@ final class DokumentZaplaty extends AbstractDTO implements DomSerializableInterf
 
         $nrDokumentu = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'NrDokumentu');
         $nrDokumentu->appendChild($dom->createTextNode((string) $this->nrDokumentu));
+
         $dokumentZaplaty->appendChild($nrDokumentu);
 
         if ($this->dataDokumentu instanceof DataDokumentu) {

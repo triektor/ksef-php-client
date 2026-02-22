@@ -17,7 +17,6 @@ use N1ebieski\KSEFClient\DTOs\HttpClient\Request;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Faktura;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\FakturaRR\Faktura as FakturaRR;
 use N1ebieski\KSEFClient\Requests\AbstractHandler;
-use N1ebieski\KSEFClient\Support\Utility;
 use N1ebieski\KSEFClient\Validator\Rules\Xml\SchemaRule;
 use N1ebieski\KSEFClient\Validator\Validator;
 use N1ebieski\KSEFClient\ValueObjects\EncryptionKey;

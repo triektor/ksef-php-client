@@ -21,7 +21,7 @@ final class LinkDoPlatnosci extends AbstractValueObject implements ValueAwareInt
         Validator::validate($value, [
             new MinRule(1),
             new MaxRule(512),
-            new RegexRule('~^(https?)://([a-zA-Z0-9][a-zA-Z0-9-]*\.)+[a-zA-Z]{2,}(:[0-9]{1,5})?(/[^\s?#]*)?\?([^#\s]*&)?IPKSeF=[0-9]{3}[a-zA-Z0-9]{10}(&[^#\s]*)?(#.*)?$~')
+            new RegexRule('~^(https?)://([a-zA-Z0-9][a-zA-Z0-9-]*\.)+[a-zA-Z]{2,}(:\d{1,5})?(/[^\s?#]*)?\?([^#\s]*&)?IPKSeF=\d{3}[a-zA-Z0-9]{10}(&[^#\s]*)?(#.*)?$~')
         ]);
 
         $this->value = $value;
