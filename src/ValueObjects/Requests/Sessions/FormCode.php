@@ -37,7 +37,7 @@ enum FormCode: string implements EnumInterface
     {
         return match ($this) {
             self::Fa3 => 'FA',
-            self::FaRr1 => 'RR',
+            self::FaRr1 => 'FA_RR',
             self::Pef3, self::KorPef3 => 'PEF',
         };
     }

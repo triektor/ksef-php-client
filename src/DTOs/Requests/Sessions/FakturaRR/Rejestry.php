@@ -33,29 +33,29 @@ final class Rejestry extends AbstractDTO implements DomSerializableInterface
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $rejestry = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Rejestry');
+        $rejestry = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Rejestry');
         $dom->appendChild($rejestry);
 
         if ($this->pelnaNazwa instanceof PelnaNazwa) {
-            $pelnaNazwa = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'PelnaNazwa');
+            $pelnaNazwa = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'PelnaNazwa');
             $pelnaNazwa->appendChild($dom->createTextNode((string) $this->pelnaNazwa));
             $rejestry->appendChild($pelnaNazwa);
         }
 
         if ($this->krs instanceof KRS) {
-            $krs = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'KRS');
+            $krs = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'KRS');
             $krs->appendChild($dom->createTextNode((string) $this->krs));
             $rejestry->appendChild($krs);
         }
 
         if ($this->regon instanceof REGON) {
-            $regon = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'REGON');
+            $regon = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'REGON');
             $regon->appendChild($dom->createTextNode((string) $this->regon));
             $rejestry->appendChild($regon);
         }
 
         if ($this->bdo instanceof BDO) {
-            $bdo = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'BDO');
+            $bdo = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'BDO');
             $bdo->appendChild($dom->createTextNode((string) $this->bdo));
             $rejestry->appendChild($bdo);
         }

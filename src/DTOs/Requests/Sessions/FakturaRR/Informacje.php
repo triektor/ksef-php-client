@@ -23,11 +23,11 @@ final class Informacje extends AbstractDTO implements DomSerializableInterface
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $informacje = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Informacje');
+        $informacje = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Informacje');
         $dom->appendChild($informacje);
 
         if ($this->stopkaFaktury instanceof StopkaFaktury) {
-            $stopkaFaktury = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'StopkaFaktury');
+            $stopkaFaktury = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'StopkaFaktury');
             $stopkaFaktury->appendChild($dom->createTextNode((string) $this->stopkaFaktury));
             $informacje->appendChild($stopkaFaktury);
         }

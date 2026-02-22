@@ -29,16 +29,16 @@ final class NrRBGroup extends AbstractDTO implements DomSerializableInterface
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $nrRBGroup = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'NrRBGroup');
+        $nrRBGroup = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'NrRBGroup');
         $dom->appendChild($nrRBGroup);
 
-        $nrRB = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'NrRB');
+        $nrRB = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'NrRB');
         $nrRB->appendChild($dom->createTextNode((string) $this->nrRB));
 
         $nrRBGroup->appendChild($nrRB);
 
         if ($this->swift instanceof SWIFT) {
-            $swift = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'SWIFT');
+            $swift = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'SWIFT');
             $swift->appendChild($dom->createTextNode((string) $this->swift));
 
             $nrRBGroup->appendChild($swift);

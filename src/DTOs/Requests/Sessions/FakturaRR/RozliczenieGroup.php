@@ -22,7 +22,7 @@ final class RozliczenieGroup extends AbstractDTO implements DomSerializableInter
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $rozliczenieGroup = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'RozliczenieGroup');
+        $rozliczenieGroup = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'RozliczenieGroup');
         $dom->appendChild($rozliczenieGroup);
 
         /** @var DOMElement $doGroup */

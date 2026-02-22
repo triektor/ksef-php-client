@@ -55,7 +55,7 @@ final class Rozliczenie extends AbstractDTO implements DomSerializableInterface
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $rozliczenie = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Rozliczenie');
+        $rozliczenie = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Rozliczenie');
         $dom->appendChild($rozliczenie);
 
         if ( ! $this->obciazenia instanceof Optional) {
@@ -67,7 +67,7 @@ final class Rozliczenie extends AbstractDTO implements DomSerializableInterface
         }
 
         if ($this->sumaObciazen instanceof SumaObciazen) {
-            $sumaObciazen = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'SumaObciazen');
+            $sumaObciazen = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'SumaObciazen');
             $sumaObciazen->appendChild($dom->createTextNode((string) $this->sumaObciazen));
 
             $rozliczenie->appendChild($sumaObciazen);
@@ -82,7 +82,7 @@ final class Rozliczenie extends AbstractDTO implements DomSerializableInterface
         }
 
         if ($this->sumaOdliczen instanceof SumaOdliczen) {
-            $sumaOdliczen = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'SumaOdliczen');
+            $sumaOdliczen = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'SumaOdliczen');
             $sumaOdliczen->appendChild($dom->createTextNode((string) $this->sumaOdliczen));
 
             $rozliczenie->appendChild($sumaOdliczen);

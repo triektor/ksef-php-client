@@ -8,8 +8,8 @@ use DOMDocument;
 use DOMElement;
 use N1ebieski\KSEFClient\Contracts\DomSerializableInterface;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\FakturaRR\FormaPlatnosciGroup;
-use N1ebieski\KSEFClient\DTOs\Requests\Sessions\FakturaRR\RachunekBankowy;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\FakturaRR\PlatnoscInnaGroup;
+use N1ebieski\KSEFClient\DTOs\Requests\Sessions\FakturaRR\RachunekBankowy1;
 use N1ebieski\KSEFClient\Support\AbstractDTO;
 use N1ebieski\KSEFClient\Support\Optional;
 use N1ebieski\KSEFClient\Validator\Rules\Array\MaxRule;
@@ -21,18 +21,18 @@ use N1ebieski\KSEFClient\ValueObjects\Requests\XmlNamespace;
 final class Platnosc extends AbstractDTO implements DomSerializableInterface
 {
     /**
-     * @var Optional|array<int, RachunekBankowy>
+     * @var Optional|array<int, RachunekBankowy1>
      */
     public readonly Optional | array $rachunekBankowy1;
 
     /**
-     * @var Optional|array<int, RachunekBankowy>
+     * @var Optional|array<int, RachunekBankowy2>
      */
     public readonly Optional | array $rachunekBankowy2;
 
     /**
-     * @param Optional|array<int, RachunekBankowy> $rachunekBankowy1 Dane rachunku bankowego rolnika ryczałtowego
-     * @param Optional|array<int, RachunekBankowy> $rachunekBankowy2 Dane rachunku bankowego nabywcy – podatnika VAT czynnego
+     * @param Optional|array<int, RachunekBankowy1> $rachunekBankowy1 Dane rachunku bankowego rolnika ryczałtowego
+     * @param Optional|array<int, RachunekBankowy2> $rachunekBankowy2 Dane rachunku bankowego nabywcy – podatnika VAT czynnego
      * @param Optional|IPKSeF $ipksef Identyfikator płatności KSeF
      * @param Optional|LinkDoPlatnosci $linkDoPlatnosci Link do płatności bezgotówkowej
      */
@@ -60,7 +60,7 @@ final class Platnosc extends AbstractDTO implements DomSerializableInterface
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $platnosc = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Platnosc');
+        $platnosc = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Platnosc');
         $dom->appendChild($platnosc);
 
         if ( ! $this->platnoscGroup instanceof Optional) {

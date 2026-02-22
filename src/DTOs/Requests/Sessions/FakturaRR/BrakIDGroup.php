@@ -25,10 +25,10 @@ final class BrakIDGroup extends AbstractDTO implements DomSerializableInterface
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $brakIDGroup = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'BrakIDGroup');
+        $brakIDGroup = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'BrakIDGroup');
         $dom->appendChild($brakIDGroup);
 
-        $brakID = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'BrakID');
+        $brakID = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'BrakID');
         $brakID->appendChild($dom->createTextNode((string) $this->brakID->value));
 
         $brakIDGroup->appendChild($brakID);

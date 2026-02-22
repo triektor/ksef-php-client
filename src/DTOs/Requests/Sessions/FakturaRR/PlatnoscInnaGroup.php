@@ -28,15 +28,15 @@ final class PlatnoscInnaGroup extends AbstractDTO implements DomSerializableInte
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $platnoscInnaGroup = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'PlatnoscInnaGroup');
+        $platnoscInnaGroup = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'PlatnoscInnaGroup');
         $dom->appendChild($platnoscInnaGroup);
 
-        $platnoscInna = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'PlatnoscInna');
+        $platnoscInna = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'PlatnoscInna');
         $platnoscInna->appendChild($dom->createTextNode((string) $this->platnoscInna->value));
 
         $platnoscInnaGroup->appendChild($platnoscInna);
 
-        $opisPlatnosci = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'OpisPlatnosci');
+        $opisPlatnosci = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'OpisPlatnosci');
         $opisPlatnosci->appendChild($dom->createTextNode((string) $this->opisPlatnosci));
 
         $platnoscInnaGroup->appendChild($opisPlatnosci);

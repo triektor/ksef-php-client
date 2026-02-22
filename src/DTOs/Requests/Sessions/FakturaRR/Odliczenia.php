@@ -28,15 +28,15 @@ final class Odliczenia extends AbstractDTO implements DomSerializableInterface
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $odliczenia = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Odliczenia');
+        $odliczenia = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Odliczenia');
         $dom->appendChild($odliczenia);
 
-        $kwota = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Kwota');
+        $kwota = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Kwota');
         $kwota->appendChild($dom->createTextNode($this->kwota->value));
 
         $odliczenia->appendChild($kwota);
 
-        $powod = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Powod');
+        $powod = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Powod');
         $powod->appendChild($dom->createTextNode($this->powod->value));
 
         $odliczenia->appendChild($powod);

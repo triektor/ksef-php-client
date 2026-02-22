@@ -49,7 +49,7 @@ final class Stopka extends AbstractDTO implements DomSerializableInterface
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $stopka = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Stopka');
+        $stopka = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Stopka');
         $dom->appendChild($stopka);
 
         if ( ! $this->informacje instanceof Optional) {

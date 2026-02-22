@@ -52,7 +52,7 @@ final class Podmiot3 extends AbstractDTO implements DomSerializableInterface
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $podmiot3 = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Podmiot3');
+        $podmiot3 = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Podmiot3');
         $dom->appendChild($podmiot3);
 
         $daneIdentyfikacyjne = $dom->importNode($this->daneIdentyfikacyjne->toDom()->documentElement, true);

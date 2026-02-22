@@ -30,21 +30,21 @@ final class DodatkowyOpis extends AbstractDTO implements DomSerializableInterfac
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $dodatkowyOpis = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'DodatkowyOpis');
+        $dodatkowyOpis = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'DodatkowyOpis');
         $dom->appendChild($dodatkowyOpis);
 
         if ($this->nrWiersza instanceof NrWiersza) {
-            $nrWiersza = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'NrWiersza');
+            $nrWiersza = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'NrWiersza');
             $nrWiersza->appendChild($dom->createTextNode((string) $this->nrWiersza));
             $dodatkowyOpis->appendChild($nrWiersza);
         }
 
-        $klucz = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Klucz');
+        $klucz = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Klucz');
         $klucz->appendChild($dom->createTextNode((string) $this->klucz));
 
         $dodatkowyOpis->appendChild($klucz);
 
-        $wartosc = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Wartosc');
+        $wartosc = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Wartosc');
         $wartosc->appendChild($dom->createTextNode((string) $this->wartosc));
 
         $dodatkowyOpis->appendChild($wartosc);

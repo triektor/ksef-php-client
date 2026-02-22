@@ -32,15 +32,15 @@ final class DaneFaKorygowanej extends AbstractDTO implements DomSerializableInte
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $daneFaKorygowanej = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'DaneFaKorygowanej');
+        $daneFaKorygowanej = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'DaneFaKorygowanej');
         $dom->appendChild($daneFaKorygowanej);
 
-        $dataWystFaKorygowanej = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'DataWystFaKorygowanej');
+        $dataWystFaKorygowanej = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'DataWystFaKorygowanej');
         $dataWystFaKorygowanej->appendChild($dom->createTextNode((string) $this->dataWystFaKorygowanej));
 
         $daneFaKorygowanej->appendChild($dataWystFaKorygowanej);
 
-        $nrFaKorygowanej = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'NrFaKorygowanej');
+        $nrFaKorygowanej = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'NrFaKorygowanej');
         $nrFaKorygowanej->appendChild($dom->createTextNode((string) $this->nrFaKorygowanej));
 
         $daneFaKorygowanej->appendChild($nrFaKorygowanej);

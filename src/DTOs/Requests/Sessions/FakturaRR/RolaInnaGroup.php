@@ -28,15 +28,15 @@ final class RolaInnaGroup extends AbstractDTO implements DomSerializableInterfac
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $rolaInnaGroup = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'RolaInnaGroup');
+        $rolaInnaGroup = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'RolaInnaGroup');
         $dom->appendChild($rolaInnaGroup);
 
-        $rolaInna = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'RolaInna');
+        $rolaInna = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'RolaInna');
         $rolaInna->appendChild($dom->createTextNode((string) $this->rolaInna->value));
 
         $rolaInnaGroup->appendChild($rolaInna);
 
-        $opisRoli = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'OpisRoli');
+        $opisRoli = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'OpisRoli');
         $opisRoli->appendChild($dom->createTextNode((string) $this->opisRoli));
 
         $rolaInnaGroup->appendChild($opisRoli);

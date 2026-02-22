@@ -25,10 +25,10 @@ final class IDWewGroup extends AbstractDTO implements DomSerializableInterface
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $iDWewGroup = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'IDWewGroup');
+        $iDWewGroup = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'IDWewGroup');
         $dom->appendChild($iDWewGroup);
 
-        $iDWew = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'IDWew');
+        $iDWew = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'IDWew');
         $iDWew->appendChild($dom->createTextNode($this->iDWew->value));
 
         $iDWewGroup->appendChild($iDWew);

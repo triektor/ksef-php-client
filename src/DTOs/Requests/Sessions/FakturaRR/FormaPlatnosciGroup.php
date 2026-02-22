@@ -22,10 +22,10 @@ final class FormaPlatnosciGroup extends AbstractDTO implements DomSerializableIn
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $formaPlatnosciGroup = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'FormaPlatnosciGroup');
+        $formaPlatnosciGroup = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'FormaPlatnosciGroup');
         $dom->appendChild($formaPlatnosciGroup);
 
-        $formaPlatnosci = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'FormaPlatnosci');
+        $formaPlatnosci = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'FormaPlatnosci');
         $formaPlatnosci->appendChild($dom->createTextNode((string) $this->formaPlatnosci->value));
 
         $formaPlatnosciGroup->appendChild($formaPlatnosci);

@@ -97,7 +97,7 @@ final class FakturaSprzedazyTowaruRolniczegoFixture extends AbstractFakturaFixtu
                     ],
                 ],
                 'ipksef' => '123A1b2C3d4E5',
-                'linkDoPlatnosci' => 'https://example.com/link-do-platnosci'
+                'linkDoPlatnosci' => 'https://sub.example.com/path/to/pay?foo=bar&IPKSeF=123A1b2C3d4E5&x=1'
             ],
         ],
         'stopka' => [

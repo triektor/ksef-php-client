@@ -55,18 +55,18 @@ final class KorektaGroup extends AbstractDTO implements DomSerializableInterface
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $korektaGroup = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'KorektaGroup');
+        $korektaGroup = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'KorektaGroup');
         $dom->appendChild($korektaGroup);
 
         if ($this->przyczynaKorekty instanceof PrzyczynaKorekty) {
-            $przyczynaKorekty = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'PrzyczynaKorekty');
+            $przyczynaKorekty = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'PrzyczynaKorekty');
             $przyczynaKorekty->appendChild($dom->createTextNode((string) $this->przyczynaKorekty));
 
             $korektaGroup->appendChild($przyczynaKorekty);
         }
 
         if ($this->typKorekty instanceof TypKorekty) {
-            $typKorekty = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'TypKorekty');
+            $typKorekty = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'TypKorekty');
             $typKorekty->appendChild($dom->createTextNode((string) $this->typKorekty->value));
 
             $korektaGroup->appendChild($typKorekty);
@@ -79,7 +79,7 @@ final class KorektaGroup extends AbstractDTO implements DomSerializableInterface
         }
 
         if ($this->nrFaKorygowany instanceof NrFaKorygowany) {
-            $nrFaKorygowany = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'NrFaKorygowany');
+            $nrFaKorygowany = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'NrFaKorygowany');
             $nrFaKorygowany->appendChild($dom->createTextNode((string) $this->nrFaKorygowany));
 
             $korektaGroup->appendChild($nrFaKorygowany);

@@ -22,10 +22,10 @@ final class NIPGroup extends AbstractDTO implements DomSerializableInterface
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $nipGroup = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'NIPGroup');
+        $nipGroup = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'NIPGroup');
         $dom->appendChild($nipGroup);
 
-        $nip = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'NIP');
+        $nip = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'NIP');
         $nip->appendChild($dom->createTextNode((string) $this->nip));
 
         $nipGroup->appendChild($nip);

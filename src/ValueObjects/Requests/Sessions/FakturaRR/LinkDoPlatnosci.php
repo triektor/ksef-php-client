@@ -8,6 +8,7 @@ use N1ebieski\KSEFClient\Contracts\ValueAwareInterface;
 use N1ebieski\KSEFClient\Support\AbstractValueObject;
 use N1ebieski\KSEFClient\Validator\Rules\String\MaxRule;
 use N1ebieski\KSEFClient\Validator\Rules\String\MinRule;
+use N1ebieski\KSEFClient\Validator\Rules\String\RegexRule;
 use N1ebieski\KSEFClient\Validator\Validator;
 use Stringable;
 
@@ -20,6 +21,7 @@ final class LinkDoPlatnosci extends AbstractValueObject implements ValueAwareInt
         Validator::validate($value, [
             new MinRule(1),
             new MaxRule(512),
+            new RegexRule('~^(https?)://([a-zA-Z0-9][a-zA-Z0-9-]*\.)+[a-zA-Z]{2,}(:[0-9]{1,5})?(/[^\s?#]*)?\?([^#\s]*&)?IPKSeF=[0-9]{3}[a-zA-Z0-9]{10}(&[^#\s]*)?(#.*)?$~')
         ]);
 
         $this->value = $value;

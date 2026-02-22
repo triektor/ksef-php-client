@@ -28,7 +28,7 @@ final class Podmiot3DaneIdentyfikacyjne extends AbstractDTO implements DomSerial
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $daneIdentyfikacyjne = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'DaneIdentyfikacyjne');
+        $daneIdentyfikacyjne = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'DaneIdentyfikacyjne');
         $dom->appendChild($daneIdentyfikacyjne);
 
         /** @var DOMElement $idGroup */
@@ -39,7 +39,7 @@ final class Podmiot3DaneIdentyfikacyjne extends AbstractDTO implements DomSerial
         }
 
         if ($this->nazwa instanceof Nazwa) {
-            $nazwa = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Nazwa');
+            $nazwa = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Nazwa');
             $nazwa->appendChild($dom->createTextNode((string) $this->nazwa));
 
             $daneIdentyfikacyjne->appendChild($nazwa);

@@ -28,15 +28,15 @@ final class Obciazenia extends AbstractDTO implements DomSerializableInterface
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $obciazenia = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Obciazenia');
+        $obciazenia = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Obciazenia');
         $dom->appendChild($obciazenia);
 
-        $kwota = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Kwota');
+        $kwota = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Kwota');
         $kwota->appendChild($dom->createTextNode($this->kwota->value));
 
         $obciazenia->appendChild($kwota);
 
-        $powod = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Powod');
+        $powod = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Powod');
         $powod->appendChild($dom->createTextNode($this->powod->value));
 
         $obciazenia->appendChild($powod);

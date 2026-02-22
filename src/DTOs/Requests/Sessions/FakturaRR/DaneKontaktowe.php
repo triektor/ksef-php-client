@@ -25,17 +25,17 @@ final class DaneKontaktowe extends AbstractDTO implements DomSerializableInterfa
         $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;
 
-        $daneKontaktowe = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'DaneKontaktowe');
+        $daneKontaktowe = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'DaneKontaktowe');
         $dom->appendChild($daneKontaktowe);
 
         if ($this->email instanceof Email) {
-            $email = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Email');
+            $email = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Email');
             $email->appendChild($dom->createTextNode((string) $this->email));
             $daneKontaktowe->appendChild($email);
         }
 
         if ($this->telefon instanceof Telefon) {
-            $telefon = $dom->createElementNS((string) XmlNamespace::Fa3->value, 'Telefon');
+            $telefon = $dom->createElementNS((string) XmlNamespace::FaRr1->value, 'Telefon');
             $telefon->appendChild($dom->createTextNode((string) $this->telefon));
             $daneKontaktowe->appendChild($telefon);
         }
