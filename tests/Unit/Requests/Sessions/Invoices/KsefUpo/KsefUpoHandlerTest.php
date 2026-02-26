@@ -36,7 +36,7 @@ dataset('validResponseProvider', function (): array {
 
 test('valid response', function (KsefUpoRequestFixture $requestFixture, KsefUpoResponseFixture $responseFixture): void {
     /** @var AbstractTestCase $this */
-    $clientStub = $this->createClientStub($responseFixture);
+    $clientStub = $this->createClientStubWithFixture($responseFixture);
 
     $request = KsefUpoRequest::from($requestFixture->data);
 
@@ -54,7 +54,7 @@ test('invalid response', function (): void {
         /** @var AbstractTestCase $this */
         $requestFixture = new KsefUpoRequestFixture();
 
-        $clientStub = $this->createClientStub($responseFixture);
+        $clientStub = $this->createClientStubWithFixture($responseFixture);
 
         $clientStub->sessions()->invoices()->ksefUpo($requestFixture->data);
     })->toBeExceptionFixture($responseFixture->data);

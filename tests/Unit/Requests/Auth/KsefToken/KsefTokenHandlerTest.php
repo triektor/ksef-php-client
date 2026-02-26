@@ -36,7 +36,7 @@ dataset('validResponseProvider', function (): array {
 
 test('valid response', function (KsefTokenRequestFixture $requestFixture, KsefTokenResponseFixture $responseFixture): void {
     /** @var AbstractTestCase $this */
-    $clientStub = $this->createClientStub($responseFixture);
+    $clientStub = $this->createClientStubWithFixture($responseFixture);
 
     $request = KsefTokenRequest::from($requestFixture->data);
 
@@ -54,7 +54,7 @@ test('invalid response', function (): void {
         /** @var AbstractTestCase $this */
         $requestFixture = new KsefTokenRequestFixture();
 
-        $clientStub = $this->createClientStub($responseFixture);
+        $clientStub = $this->createClientStubWithFixture($responseFixture);
 
         $clientStub->auth()->ksefToken($requestFixture->data);
     })->toBeExceptionFixture($responseFixture->data);

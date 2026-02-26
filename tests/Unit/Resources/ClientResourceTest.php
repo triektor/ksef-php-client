@@ -29,7 +29,7 @@ test('auto access token refresh', function (string $resource): void {
     $accessToken = new AccessToken('access-token', new DateTimeImmutable('-15 minutes'));
     $refreshToken = new RefreshToken('refresh-token', new DateTimeImmutable('+7 days'));
 
-    $clientStub = $this->createClientStub($responseFixture)
+    $clientStub = $this->createClientStubWithFixture($responseFixture)
         ->withAccessToken($accessToken)
         ->withRefreshToken($refreshToken);
 
@@ -47,7 +47,7 @@ test('throw exception if access token is expired', function (string $resource): 
     /** @var AbstractTestCase $this */
     $accessToken = new AccessToken('access-token', new DateTimeImmutable('-15 minutes'));
 
-    $clientStub = $this->createClientStub(new RefreshResponseFixture())
+    $clientStub = $this->createClientStubWithFixture(new RefreshResponseFixture())
         ->withAccessToken($accessToken);
 
     $clientStub->{$resource}();

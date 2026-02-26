@@ -39,7 +39,7 @@ test('valid response', function (InitRequestFixture $requestFixture, InitRespons
     /** @var AbstractTestCase $this */
     $encryptedKey = EncryptedKey::from('string', 'string');
 
-    $clientStub = $this->createClientStub($responseFixture)->withEncryptedKey($encryptedKey);
+    $clientStub = $this->createClientStubWithFixture($responseFixture)->withEncryptedKey($encryptedKey);
 
     $request = InitRequest::from($requestFixture->data);
 
@@ -51,10 +51,11 @@ test('valid response', function (InitRequestFixture $requestFixture, InitRespons
 })->with('validResponseProvider');
 
 test('invalid response without EncryptedKey', function (): void {
+    /** @var AbstractTestCase $this */
     $requestFixture = new InitRequestFixture();
     $responseFixture = new InitResponseFixture();
 
-    $clientStub = $this->createClientStub($responseFixture);
+    $clientStub = $this->createClientStubWithFixture($responseFixture);
 
     $clientStub->invoices()->exports()->init($requestFixture->data)->object();
 })->throws(RuntimeException::class, 'Encrypted key is required to open session.');
@@ -66,7 +67,7 @@ test('invalid response', function (): void {
         /** @var AbstractTestCase $this */
         $requestFixture = new InitRequestFixture();
 
-        $clientStub = $this->createClientStub($responseFixture);
+        $clientStub = $this->createClientStubWithFixture($responseFixture);
 
         $clientStub->invoices()->exports()->init($requestFixture->data);
     })->toBeExceptionFixture($responseFixture->data);

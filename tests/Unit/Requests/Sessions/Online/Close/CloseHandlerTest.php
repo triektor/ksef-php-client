@@ -36,7 +36,7 @@ dataset('validResponseProvider', function (): array {
 
 test('valid response', function (CloseRequestFixture $requestFixture, CloseResponseFixture $responseFixture): void {
     /** @var AbstractTestCase $this */
-    $clientStub = $this->createClientStub($responseFixture);
+    $clientStub = $this->createClientStubWithFixture($responseFixture);
 
     $request = CloseRequest::from($requestFixture->data);
 
@@ -54,7 +54,7 @@ test('invalid response', function (): void {
         /** @var AbstractTestCase $this */
         $requestFixture = new CloseRequestFixture();
 
-        $clientStub = $this->createClientStub($responseFixture);
+        $clientStub = $this->createClientStubWithFixture($responseFixture);
 
         $clientStub->sessions()->online()->close($requestFixture->data);
     })->toBeExceptionFixture($responseFixture->data);

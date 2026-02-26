@@ -28,7 +28,7 @@ dataset('validResponseProvider', function (): array {
 
 test('valid response', function (ResetResponseFixture $responseFixture): void {
     /** @var AbstractTestCase $this */
-    $clientStub = $this->createClientStub($responseFixture);
+    $clientStub = $this->createClientStubWithFixture($responseFixture);
 
     $response = $clientStub->testdata()->rateLimits()->reset()->status();
 
@@ -40,7 +40,7 @@ test('invalid response', function (): void {
 
     expect(function () use ($responseFixture): void {
         /** @var AbstractTestCase $this */
-        $clientStub = $this->createClientStub($responseFixture);
+        $clientStub = $this->createClientStubWithFixture($responseFixture);
 
         $clientStub->testdata()->rateLimits()->reset();
     })->toBeExceptionFixture($responseFixture->data);

@@ -71,7 +71,7 @@ dataset('validResponseProvider', function (): array {
 
 test('valid response', function (SendRequestFixture $requestFixture, SendResponseFixture $responseFixture): void {
     /** @var AbstractTestCase $this */
-    $clientStub = $this->createClientStub($responseFixture);
+    $clientStub = $this->createClientStubWithFixture($responseFixture);
 
     $request = SendRequest::from($requestFixture->data);
 
@@ -95,7 +95,7 @@ test('invalid response', function (): void {
         $requestFixture = (new SendRequestFixture())
             ->withFakturaFixture(new FakturaSprzedazyTowaruFixture())->withName('faktura sprzedaży towaru');
 
-        $clientStub = $this->createClientStub($responseFixture);
+        $clientStub = $this->createClientStubWithFixture($responseFixture);
 
         $clientStub->sessions()->online()->send($requestFixture->data);
     })->toBeExceptionFixture($responseFixture->data);

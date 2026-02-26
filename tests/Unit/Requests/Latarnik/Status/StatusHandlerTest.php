@@ -27,7 +27,7 @@ dataset('validResponseProvider', function (): array {
 
 test('valid response', function (StatusResponseFixture $responseFixture): void {
     /** @var AbstractTestCase $this */
-    $clientStub = $this->createClientStub($responseFixture);
+    $clientStub = $this->createClientStubWithFixture($responseFixture);
 
     $response = $clientStub->latarnia()->status()->object();
 

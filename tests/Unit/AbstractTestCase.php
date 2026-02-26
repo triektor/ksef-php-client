@@ -23,7 +23,7 @@ use Psr\SimpleCache\CacheInterface;
 
 abstract class AbstractTestCase extends TestCase
 {
-    public function createResponseStub(AbstractResponseFixture $responseFixture): MockInterface & ResponseInterface
+    public function createResponseStubWithFixture(AbstractResponseFixture $responseFixture): MockInterface & ResponseInterface
     {
         $streamStub = Mockery::mock(StreamInterface::class);
         $streamStub->shouldReceive('getContents')->andReturn($responseFixture->toContents());
@@ -36,7 +36,7 @@ abstract class AbstractTestCase extends TestCase
         return $responseStub;
     }
 
-    public function createHttpClientStub(AbstractResponseFixture $responseFixture): MockInterface & HttpClientInterface
+    public function createHttpClientStubWithFixture(AbstractResponseFixture $responseFixture): MockInterface & HttpClientInterface
     {
         $httpClientStub = Mockery::mock(HttpClientInterface::class);
         $httpClientStub->shouldReceive('withBaseUri')->andReturnSelf();
@@ -45,7 +45,7 @@ abstract class AbstractTestCase extends TestCase
         $httpClientStub->shouldReceive('withEncryptedKey')->andReturnSelf();
 
         /** @var MockInterface&ResponseInterface $responseStub */
-        $responseStub = $this->createResponseStub($responseFixture);
+        $responseStub = $this->createResponseStubWithFixture($responseFixture);
 
         $response = new Response($responseStub);
         $response->throwExceptionIfError();
@@ -56,13 +56,23 @@ abstract class AbstractTestCase extends TestCase
         return $httpClientStub;
     }
 
-    public function createClientStub(
+    public function createClientStubWithFixture(
         AbstractResponseFixture $responseFixture,
-        ?HttpClientInterface $httpClientStub = null,
         ?CacheInterface $cacheStub = null
     ): ClientResourceInterface {
-        $httpClientStub ??= $this->createHttpClientStub($responseFixture);
+        $httpClientStub = $this->createHttpClientStubWithFixture($responseFixture);
 
+        /** @var MockInterface&HttpClientInterface $httpClientStub */
+        return $this->createClientStub(
+            httpClientStub: $httpClientStub,
+            cacheStub: $cacheStub
+        );
+    }
+
+    public function createClientStub(
+        HttpClientInterface $httpClientStub,
+        ?CacheInterface $cacheStub = null
+    ): ClientResourceInterface {
         /** @var MockInterface&HttpClientInterface $httpClientStub */
         return new ClientResource(
             client: $httpClientStub,

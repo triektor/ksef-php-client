@@ -24,7 +24,7 @@ test('returns public key certificates from cache when available', function (): v
     $responseFixture = new PublicKeyCertificatesResponseFixture();
 
     $cachedResponse = new PublicKeyCertificatesResponse(
-        new Response($this->createResponseStub($responseFixture))
+        new Response($this->createResponseStubWithFixture($responseFixture))
     );
 
     /** @var MockInterface&CacheInterface $cacheStub */
@@ -32,7 +32,7 @@ test('returns public key certificates from cache when available', function (): v
     $cacheStub->shouldReceive('get')->once()->andReturn($cachedResponse);
     $cacheStub->shouldReceive('set')->never();
 
-    $response = $this->createClientStub($responseFixture, $httpClientStub, $cacheStub)
+    $response = $this->createClientStub($httpClientStub, $cacheStub)
         ->security()
         ->publicKeyCertificates();
 
@@ -43,14 +43,14 @@ test('fetches public key certificates from source when cache is null', function 
     /** @var AbstractTestCase $this */
     $responseFixture = new PublicKeyCertificatesResponseFixture();
 
-    $httpResponse = new Response($this->createResponseStub($responseFixture));
+    $httpResponse = new Response($this->createResponseStubWithFixture($responseFixture));
 
     /** @var MockInterface&HttpClientInterface $httpClientStub */
     $httpClientStub = Mockery::mock(HttpClientInterface::class);
     $httpClientStub->shouldReceive('withoutAccessToken')->once()->andReturnSelf();
     $httpClientStub->shouldReceive('sendRequest')->once()->andReturn($httpResponse);
 
-    $response = $this->createClientStub($responseFixture, $httpClientStub)
+    $response = $this->createClientStub($httpClientStub)
         ->security()
         ->publicKeyCertificates();
 
@@ -62,7 +62,7 @@ test('fetches from source and saves to cache when cache has no value', function 
     /** @var AbstractTestCase $this */
     $responseFixture = new PublicKeyCertificatesResponseFixture();
 
-    $httpResponse = new Response($this->createResponseStub($responseFixture));
+    $httpResponse = new Response($this->createResponseStubWithFixture($responseFixture));
 
     /** @var MockInterface&HttpClientInterface $httpClientStub */
     $httpClientStub = Mockery::mock(HttpClientInterface::class);
@@ -80,7 +80,7 @@ test('fetches from source and saves to cache when cache has no value', function 
                 && $ttl === 43200)
         ->andReturn(true);
 
-    $response = $this->createClientStub($responseFixture, $httpClientStub, $cacheStub)
+    $response = $this->createClientStub($httpClientStub, $cacheStub)
         ->security()
         ->publicKeyCertificates();
 
