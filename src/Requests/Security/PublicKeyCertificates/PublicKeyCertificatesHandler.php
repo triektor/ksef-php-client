@@ -22,11 +22,6 @@ final class PublicKeyCertificatesHandler extends AbstractHandler
     ) {
     }
 
-    private function getCacheKeyForMode(): string
-    {
-        return ConfigInterface::PUBLIC_KEY_CERTIFICATES_CACHE_KEY . '_' . $this->config->baseUri->value;
-    }
-
     public function handle(): PublicKeyCertificatesResponse
     {
         if ( ! $this->cache instanceof CacheInterface) {
@@ -48,6 +43,11 @@ final class PublicKeyCertificatesHandler extends AbstractHandler
         );
 
         return $response;
+    }
+
+    private function getCacheKeyForMode(): string
+    {
+        return sprintf(ConfigInterface::PUBLIC_KEY_CERTIFICATES_CACHE_KEY, $this->config->mode->value);
     }
 
     private function getPublicKeyCertificatesResponse(): PublicKeyCertificatesResponse
