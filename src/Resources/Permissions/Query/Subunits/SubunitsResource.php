@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Permissions\Query\Subunits;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface;
@@ -17,7 +18,8 @@ final class SubunitsResource extends AbstractResource implements SubunitsResourc
 {
     public function __construct(
         private readonly HttpClientInterface $client,
-        private readonly ExceptionHandlerInterface $exceptionHandler
+        private readonly ExceptionHandlerInterface $exceptionHandler,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
@@ -25,7 +27,7 @@ final class SubunitsResource extends AbstractResource implements SubunitsResourc
     {
         try {
             if ($request instanceof GrantsRequest === false) {
-                $request = GrantsRequest::from($request);
+                $request = GrantsRequest::from($request, $this->valinorCache);
             }
 
             return (new GrantsHandler($this->client))->handle($request);

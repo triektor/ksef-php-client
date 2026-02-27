@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use CuyZ\Valinor\Cache\Cache;
+use N1ebieski\KSEFClient\Factories\ValinorCacheFactory;
 use N1ebieski\KSEFClient\Requests\Sessions\Online\Send\SendRequest;
 use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaKorygujacaDaneNabywcyFixture;
 use N1ebieski\KSEFClient\Testing\Fixtures\DTOs\Requests\Sessions\FakturaKorygujacaPozaKsefFixture;
@@ -57,23 +59,30 @@ dataset('validResponseProvider', function (): array {
         new SendResponseFixture(),
     ];
 
+    $valinorCache = [
+        'without cache' => null,
+        'with cache' => ValinorCacheFactory::make(watcher: true)
+    ];
+
     $combinations = [];
 
     foreach ($requests as $request) {
         foreach ($responses as $response) {
-            $combinations["{$request->name}, {$response->name}"] = [$request, $response];
+            foreach ($valinorCache as $valinorCacheKey => $valinorCacheValue) {
+                $combinations["{$request->name}, {$response->name}, {$valinorCacheKey}"] = [$request, $response, $valinorCacheValue];
+            }
         }
     }
 
-    /** @var array<string, array{SendRequestFixture, SendResponseFixture}> */
+    /** @var array<string, array{SendRequestFixture, SendResponseFixture, ?Cache}> */
     return $combinations;
 });
 
-test('valid response', function (SendRequestFixture $requestFixture, SendResponseFixture $responseFixture): void {
+test('valid response', function (SendRequestFixture $requestFixture, SendResponseFixture $responseFixture, ?Cache $valinorCache): void {
     /** @var AbstractTestCase $this */
     $clientStub = $this->createClientStubWithFixture($responseFixture);
 
-    $request = SendRequest::from($requestFixture->data);
+    $request = SendRequest::from($requestFixture->data, $valinorCache);
 
     Validator::validate($request->toXml(), [
         new SchemaRule(SchemaPath::from($request->formCode->getSchemaPath()))

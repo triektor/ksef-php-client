@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Sessions\Batch;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Actions\EncryptDocument\EncryptDocumentHandler;
 use N1ebieski\KSEFClient\Actions\SplitDocumentIntoParts\SplitDocumentIntoPartsHandler;
 use N1ebieski\KSEFClient\Actions\ZipDocuments\ZipDocumentsHandler;
@@ -29,7 +30,8 @@ final class BatchResource extends AbstractResource implements BatchResourceInter
         private readonly HttpClientInterface $client,
         private readonly Config $config,
         private readonly ExceptionHandlerInterface $exceptionHandler,
-        private readonly ?LoggerInterface $logger = null
+        private readonly ?LoggerInterface $logger = null,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
@@ -37,7 +39,7 @@ final class BatchResource extends AbstractResource implements BatchResourceInter
     {
         try {
             if (is_array($request)) {
-                $request = OpenAndSendRequest::from($request);
+                $request = OpenAndSendRequest::from($request, $this->valinorCache);
             }
 
             return (new OpenAndSendHandler(
@@ -56,7 +58,7 @@ final class BatchResource extends AbstractResource implements BatchResourceInter
     {
         try {
             if ($request instanceof CloseRequest === false) {
-                $request = CloseRequest::from($request);
+                $request = CloseRequest::from($request, $this->valinorCache);
             }
 
             return (new CloseHandler($this->client))->handle($request);

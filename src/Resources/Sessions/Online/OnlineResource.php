@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Sessions\Online;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Actions\EncryptDocument\EncryptDocumentHandler;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
@@ -27,7 +28,8 @@ final class OnlineResource extends AbstractResource implements OnlineResourceInt
         private readonly HttpClientInterface $client,
         private readonly Config $config,
         private readonly ExceptionHandlerInterface $exceptionHandler,
-        private readonly ?LoggerInterface $logger = null
+        private readonly ?LoggerInterface $logger = null,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
@@ -35,7 +37,7 @@ final class OnlineResource extends AbstractResource implements OnlineResourceInt
     {
         try {
             if ($request instanceof OpenRequest === false) {
-                $request = OpenRequest::from($request);
+                $request = OpenRequest::from($request, $this->valinorCache);
             }
 
             return (new OpenHandler($this->client, $this->config))->handle($request);
@@ -48,7 +50,7 @@ final class OnlineResource extends AbstractResource implements OnlineResourceInt
     {
         try {
             if ($request instanceof CloseRequest === false) {
-                $request = CloseRequest::from($request);
+                $request = CloseRequest::from($request, $this->valinorCache);
             }
 
             return (new CloseHandler($this->client))->handle($request);
@@ -61,7 +63,7 @@ final class OnlineResource extends AbstractResource implements OnlineResourceInt
     {
         try {
             if (is_array($request)) {
-                $request = SendRequest::from($request);
+                $request = SendRequest::from($request, $this->valinorCache);
             }
 
             return (new SendHandler(

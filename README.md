@@ -182,6 +182,7 @@ composer require guzzlehttp/guzzle
 ```php
 use N1ebieski\KSEFClient\ClientBuilder;
 use N1ebieski\KSEFClient\ValueObjects\Mode;
+use N1ebieski\KSEFClient\Factories\ValinorCacheFactory;
 use N1ebieski\KSEFClient\Factories\EncryptionKeyFactory;
 
 $client = (new ClientBuilder())
@@ -190,6 +191,7 @@ $client = (new ClientBuilder())
     ->withLatarniaApiUrl($_ENV['KSEF_LATARNIA_API_URL']) // Optional, default is set by Mode selection
     ->withHttpClient(new \GuzzleHttp\Client(...)) // Optional PSR-18 implementation, default is set by Psr18ClientDiscovery::find()
     ->withCache(new \Symfony\Component\Cache\Psr16Cache(...), $_ENV['CACHE_TTL']) // Optional PSR-16 implementation, default is null
+    ->withValinorCache(ValinorCacheFactory::make()) // Optional Valinor cache implementation for caching auto-mapping DTO, see: https://valinor-php.dev/2.3/other/performance-and-caching/
     ->withLogger(new \Monolog\Logger(...)) // Optional PSR-3 implementation, default is set by PsrDiscovery\Discover::log()
     ->withLogPath($_ENV['PATH_TO_LOG_FILE'], $_ENV['LOG_LEVEL']) // Optional, level: null disables logging
     ->withExceptionHandler(new \ExceptionHandler(...)) // Optional N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface implmentation
@@ -226,6 +228,29 @@ $authorisationStatusResponse = $client->auth()->status([
     'referenceNumber' => '20250508-EE-B395BBC9CD-A7DB4E6095-BD'
 ])->object();
 ```
+
+For best performance, it is recommended to use caching:
+
+```php
+use N1ebieski\KSEFClient\ClientBuilder;
+use N1ebieski\KSEFClient\Factories\ValinorCacheFactory;
+
+$client = (new ClientBuilder())
+    ->withValinorCache(ValinorCacheFactory::make()) // Or other CuyZ\Valinor\Cache\Cache implementation
+```
+
+or directly for a DTO:
+
+```php
+use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Faktura;
+
+$faktura = Faktura::from([...], ValinorCacheFactory::make())
+```
+
+> [!IMPORTANT]
+> If you are using caching, remember to clear the cache after updating this package!
+
+More information: https://valinor-php.dev/2.3/other/performance-and-caching/
 
 ## Authorization
 

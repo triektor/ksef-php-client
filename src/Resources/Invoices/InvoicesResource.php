@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Invoices;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface;
@@ -21,7 +22,8 @@ final class InvoicesResource extends AbstractResource implements InvoicesResourc
     public function __construct(
         private readonly HttpClientInterface $client,
         private readonly Config $config,
-        private readonly ExceptionHandlerInterface $exceptionHandler
+        private readonly ExceptionHandlerInterface $exceptionHandler,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
@@ -29,7 +31,7 @@ final class InvoicesResource extends AbstractResource implements InvoicesResourc
     {
         try {
             if ($request instanceof DownloadRequest === false) {
-                $request = DownloadRequest::from($request);
+                $request = DownloadRequest::from($request, $this->valinorCache);
             }
 
             return (new DownloadHandler($this->client))->handle($request);
@@ -41,7 +43,7 @@ final class InvoicesResource extends AbstractResource implements InvoicesResourc
     public function query(): QueryResource
     {
         try {
-            return new QueryResource($this->client, $this->exceptionHandler);
+            return new QueryResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }
@@ -50,7 +52,7 @@ final class InvoicesResource extends AbstractResource implements InvoicesResourc
     public function exports(): ExportsResource
     {
         try {
-            return new ExportsResource($this->client, $this->config, $this->exceptionHandler);
+            return new ExportsResource($this->client, $this->config, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }

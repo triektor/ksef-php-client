@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Testdata\RateLimits;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface;
@@ -19,7 +20,8 @@ final class RateLimitsResource extends AbstractResource implements RateLimitsRes
 {
     public function __construct(
         private readonly HttpClientInterface $client,
-        private readonly ExceptionHandlerInterface $exceptionHandler
+        private readonly ExceptionHandlerInterface $exceptionHandler,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
@@ -27,7 +29,7 @@ final class RateLimitsResource extends AbstractResource implements RateLimitsRes
     {
         try {
             if ($request instanceof LimitsRequest === false) {
-                $request = LimitsRequest::from($request);
+                $request = LimitsRequest::from($request, $this->valinorCache);
             }
 
             return (new LimitsHandler($this->client))->handle($request);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Auth;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Actions\ConvertEcdsaDerToRaw\ConvertEcdsaDerToRawHandler;
 use N1ebieski\KSEFClient\Actions\SignDocument\SignDocumentHandler;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
@@ -29,7 +30,8 @@ final class AuthResource extends AbstractResource implements AuthResourceInterfa
     public function __construct(
         private readonly HttpClientInterface $client,
         private readonly Config $config,
-        private readonly ExceptionHandlerInterface $exceptionHandler
+        private readonly ExceptionHandlerInterface $exceptionHandler,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
@@ -46,7 +48,7 @@ final class AuthResource extends AbstractResource implements AuthResourceInterfa
     {
         try {
             if (is_array($request)) {
-                $request = XadesSignatureRequest::from($request);
+                $request = XadesSignatureRequest::from($request, $this->valinorCache);
             }
 
             return (new XadesSignatureHandler(
@@ -63,7 +65,7 @@ final class AuthResource extends AbstractResource implements AuthResourceInterfa
     {
         try {
             if ($request instanceof KsefTokenRequest === false) {
-                $request = KsefTokenRequest::from($request);
+                $request = KsefTokenRequest::from($request, $this->valinorCache);
             }
 
             return (new KsefTokenHandler($this->client))->handle($request);
@@ -76,7 +78,7 @@ final class AuthResource extends AbstractResource implements AuthResourceInterfa
     {
         try {
             if ($request instanceof StatusRequest === false) {
-                $request = StatusRequest::from($request);
+                $request = StatusRequest::from($request, $this->valinorCache);
             }
 
             return (new StatusHandler($this->client))->handle($request);
@@ -97,7 +99,7 @@ final class AuthResource extends AbstractResource implements AuthResourceInterfa
     public function sessions(): SessionsResource
     {
         try {
-            return new SessionsResource($this->client, $this->exceptionHandler);
+            return new SessionsResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }

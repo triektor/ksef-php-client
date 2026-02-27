@@ -128,7 +128,7 @@ final class ClientResource extends AbstractResource implements ClientResourceInt
         try {
             $this->refreshTokenIfExpired();
 
-            return new AuthResource($this->client, $this->config, $this->exceptionHandler);
+            return new AuthResource($this->client, $this->config, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }
@@ -168,7 +168,7 @@ final class ClientResource extends AbstractResource implements ClientResourceInt
         try {
             $this->refreshTokenIfExpired();
 
-            return new SessionsResource($this->client, $this->config, $this->exceptionHandler, $this->logger);
+            return new SessionsResource($this->client, $this->config, $this->exceptionHandler, $this->logger, $this->valinorCache);
         } catch (Exception $exception) {
             throw $this->exceptionHandler->handle($exception);
         }
@@ -179,7 +179,7 @@ final class ClientResource extends AbstractResource implements ClientResourceInt
         try {
             $this->refreshTokenIfExpired();
 
-            return new InvoicesResource($this->client, $this->config, $this->exceptionHandler);
+            return new InvoicesResource($this->client, $this->config, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }
@@ -190,7 +190,7 @@ final class ClientResource extends AbstractResource implements ClientResourceInt
         try {
             $this->refreshTokenIfExpired();
 
-            return new PermissionsResource($this->client, $this->exceptionHandler);
+            return new PermissionsResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }
@@ -201,7 +201,7 @@ final class ClientResource extends AbstractResource implements ClientResourceInt
         try {
             $this->refreshTokenIfExpired();
 
-            return new CertificatesResource($this->client, $this->exceptionHandler);
+            return new CertificatesResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }
@@ -212,7 +212,7 @@ final class ClientResource extends AbstractResource implements ClientResourceInt
         try {
             $this->refreshTokenIfExpired();
 
-            return new TokensResource($this->client, $this->exceptionHandler);
+            return new TokensResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }
@@ -221,7 +221,7 @@ final class ClientResource extends AbstractResource implements ClientResourceInt
     public function testdata(): TestdataResource
     {
         try {
-            return new TestdataResource($this->client, $this->exceptionHandler);
+            return new TestdataResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Tokens;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface;
@@ -23,7 +24,8 @@ final class TokensResource extends AbstractResource implements TokensResourceInt
 {
     public function __construct(
         private readonly HttpClientInterface $client,
-        private readonly ExceptionHandlerInterface $exceptionHandler
+        private readonly ExceptionHandlerInterface $exceptionHandler,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
@@ -31,7 +33,7 @@ final class TokensResource extends AbstractResource implements TokensResourceInt
     {
         try {
             if ($request instanceof CreateRequest === false) {
-                $request = CreateRequest::from($request);
+                $request = CreateRequest::from($request, $this->valinorCache);
             }
 
             return (new CreateHandler($this->client))->handle($request);
@@ -44,7 +46,7 @@ final class TokensResource extends AbstractResource implements TokensResourceInt
     {
         try {
             if ($request instanceof ListRequest === false) {
-                $request = ListRequest::from($request);
+                $request = ListRequest::from($request, $this->valinorCache);
             }
 
             return (new ListHandler($this->client))->handle($request);
@@ -57,7 +59,7 @@ final class TokensResource extends AbstractResource implements TokensResourceInt
     {
         try {
             if ($request instanceof StatusRequest === false) {
-                $request = StatusRequest::from($request);
+                $request = StatusRequest::from($request, $this->valinorCache);
             }
 
             return (new StatusHandler($this->client))->handle($request);
@@ -70,7 +72,7 @@ final class TokensResource extends AbstractResource implements TokensResourceInt
     {
         try {
             if ($request instanceof RevokeRequest === false) {
-                $request = RevokeRequest::from($request);
+                $request = RevokeRequest::from($request, $this->valinorCache);
             }
 
             return (new RevokeHandler($this->client))->handle($request);

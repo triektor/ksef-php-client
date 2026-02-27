@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Permissions\Operations;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface;
@@ -17,7 +18,8 @@ final class OperationsResource extends AbstractResource implements OperationsRes
 {
     public function __construct(
         private readonly HttpClientInterface $client,
-        private readonly ExceptionHandlerInterface $exceptionHandler
+        private readonly ExceptionHandlerInterface $exceptionHandler,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
@@ -25,7 +27,7 @@ final class OperationsResource extends AbstractResource implements OperationsRes
     {
         try {
             if ($request instanceof StatusRequest === false) {
-                $request = StatusRequest::from($request);
+                $request = StatusRequest::from($request, $this->valinorCache);
             }
 
             return (new StatusHandler($this->client))->handle($request);

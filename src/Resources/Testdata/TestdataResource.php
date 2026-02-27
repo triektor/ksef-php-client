@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Testdata;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
 use N1ebieski\KSEFClient\Contracts\Resources\Testdata\TestdataResourceInterface;
@@ -20,14 +21,15 @@ final class TestdataResource extends AbstractResource implements TestdataResourc
 {
     public function __construct(
         private readonly HttpClientInterface $client,
-        private readonly ExceptionHandlerInterface $exceptionHandler
+        private readonly ExceptionHandlerInterface $exceptionHandler,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
     public function subject(): SubjectResource
     {
         try {
-            return new SubjectResource($this->client, $this->exceptionHandler);
+            return new SubjectResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }
@@ -36,7 +38,7 @@ final class TestdataResource extends AbstractResource implements TestdataResourc
     public function person(): PersonResource
     {
         try {
-            return new PersonResource($this->client, $this->exceptionHandler);
+            return new PersonResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }
@@ -45,7 +47,7 @@ final class TestdataResource extends AbstractResource implements TestdataResourc
     public function limits(): LimitsResource
     {
         try {
-            return new LimitsResource($this->client, $this->exceptionHandler);
+            return new LimitsResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }
@@ -54,7 +56,7 @@ final class TestdataResource extends AbstractResource implements TestdataResourc
     public function rateLimits(): RateLimitsResource
     {
         try {
-            return new RateLimitsResource($this->client, $this->exceptionHandler);
+            return new RateLimitsResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }
@@ -63,7 +65,7 @@ final class TestdataResource extends AbstractResource implements TestdataResourc
     public function attachment(): AttachmentResource
     {
         try {
-            return new AttachmentResource($this->client, $this->exceptionHandler);
+            return new AttachmentResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }
@@ -72,7 +74,7 @@ final class TestdataResource extends AbstractResource implements TestdataResourc
     public function context(): ContextResource
     {
         try {
-            return new ContextResource($this->client, $this->exceptionHandler);
+            return new ContextResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }

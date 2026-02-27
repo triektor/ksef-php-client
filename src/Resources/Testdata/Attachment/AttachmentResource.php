@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Testdata\Attachment;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface;
@@ -19,7 +20,8 @@ final class AttachmentResource extends AbstractResource implements AttachmentRes
 {
     public function __construct(
         private readonly HttpClientInterface $client,
-        private readonly ExceptionHandlerInterface $exceptionHandler
+        private readonly ExceptionHandlerInterface $exceptionHandler,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
@@ -27,7 +29,7 @@ final class AttachmentResource extends AbstractResource implements AttachmentRes
     {
         try {
             if ($request instanceof ApproveRequest === false) {
-                $request = ApproveRequest::from($request);
+                $request = ApproveRequest::from($request, $this->valinorCache);
             }
 
             return (new ApproveHandler($this->client))->handle($request);
@@ -40,7 +42,7 @@ final class AttachmentResource extends AbstractResource implements AttachmentRes
     {
         try {
             if ($request instanceof RevokeRequest === false) {
-                $request = RevokeRequest::from($request);
+                $request = RevokeRequest::from($request, $this->valinorCache);
             }
 
             return (new RevokeHandler($this->client))->handle($request);

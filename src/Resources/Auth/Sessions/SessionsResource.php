@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Auth\Sessions;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface;
@@ -20,7 +21,8 @@ final class SessionsResource extends AbstractResource implements SessionsResourc
 {
     public function __construct(
         private readonly HttpClientInterface $client,
-        private readonly ExceptionHandlerInterface $exceptionHandler
+        private readonly ExceptionHandlerInterface $exceptionHandler,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
@@ -28,7 +30,7 @@ final class SessionsResource extends AbstractResource implements SessionsResourc
     {
         try {
             if ($request instanceof ListRequest === false) {
-                $request = ListRequest::from($request);
+                $request = ListRequest::from($request, $this->valinorCache);
             }
 
             return (new ListHandler($this->client))->handle($request);
@@ -50,7 +52,7 @@ final class SessionsResource extends AbstractResource implements SessionsResourc
     {
         try {
             if ($request instanceof RevokeRequest === false) {
-                $request = RevokeRequest::from($request);
+                $request = RevokeRequest::from($request, $this->valinorCache);
             }
 
             return (new RevokeHandler($this->client))->handle($request);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Testdata\Context;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface;
@@ -19,7 +20,8 @@ final class ContextResource extends AbstractResource implements ContextResourceI
 {
     public function __construct(
         private readonly HttpClientInterface $client,
-        private readonly ExceptionHandlerInterface $exceptionHandler
+        private readonly ExceptionHandlerInterface $exceptionHandler,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
@@ -27,7 +29,7 @@ final class ContextResource extends AbstractResource implements ContextResourceI
     {
         try {
             if ($request instanceof BlockRequest === false) {
-                $request = BlockRequest::from($request);
+                $request = BlockRequest::from($request, $this->valinorCache);
             }
 
             return (new BlockHandler($this->client))->handle($request);
@@ -40,7 +42,7 @@ final class ContextResource extends AbstractResource implements ContextResourceI
     {
         try {
             if ($request instanceof UnblockRequest === false) {
-                $request = UnblockRequest::from($request);
+                $request = UnblockRequest::from($request, $this->valinorCache);
             }
 
             return (new UnblockHandler($this->client))->handle($request);

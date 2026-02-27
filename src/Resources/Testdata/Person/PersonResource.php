@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Testdata\Person;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface;
@@ -19,7 +20,8 @@ final class PersonResource extends AbstractResource implements PersonResourceInt
 {
     public function __construct(
         private readonly HttpClientInterface $client,
-        private readonly ExceptionHandlerInterface $exceptionHandler
+        private readonly ExceptionHandlerInterface $exceptionHandler,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
@@ -27,7 +29,7 @@ final class PersonResource extends AbstractResource implements PersonResourceInt
     {
         try {
             if ($request instanceof CreateRequest === false) {
-                $request = CreateRequest::from($request);
+                $request = CreateRequest::from($request, $this->valinorCache);
             }
 
             return (new CreateHandler($this->client))->handle($request);
@@ -40,7 +42,7 @@ final class PersonResource extends AbstractResource implements PersonResourceInt
     {
         try {
             if ($request instanceof RemoveRequest === false) {
-                $request = RemoveRequest::from($request);
+                $request = RemoveRequest::from($request, $this->valinorCache);
             }
 
             return (new RemoveHandler($this->client))->handle($request);

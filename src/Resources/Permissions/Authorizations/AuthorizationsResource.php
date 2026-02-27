@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Permissions\Authorizations;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface;
@@ -19,7 +20,8 @@ final class AuthorizationsResource extends AbstractResource implements Authoriza
 {
     public function __construct(
         private readonly HttpClientInterface $client,
-        private readonly ExceptionHandlerInterface $exceptionHandler
+        private readonly ExceptionHandlerInterface $exceptionHandler,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
@@ -27,7 +29,7 @@ final class AuthorizationsResource extends AbstractResource implements Authoriza
     {
         try {
             if ($request instanceof GrantsRequest === false) {
-                $request = GrantsRequest::from($request);
+                $request = GrantsRequest::from($request, $this->valinorCache);
             }
 
             return (new GrantsHandler($this->client))->handle($request);
@@ -40,7 +42,7 @@ final class AuthorizationsResource extends AbstractResource implements Authoriza
     {
         try {
             if ($request instanceof RevokeRequest === false) {
-                $request = RevokeRequest::from($request);
+                $request = RevokeRequest::from($request, $this->valinorCache);
             }
 
             return (new RevokeHandler($this->client))->handle($request);

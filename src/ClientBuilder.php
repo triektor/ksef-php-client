@@ -352,7 +352,8 @@ final class ClientBuilder
             config: $config,
             exceptionHandler: $this->exceptionHandler,
             logger: $this->logger,
-            cache: $this->cache
+            cache: $this->cache,
+            valinorCache: $this->valinorCache
         );
 
         if ($this->encryptionKey instanceof EncryptionKey) {

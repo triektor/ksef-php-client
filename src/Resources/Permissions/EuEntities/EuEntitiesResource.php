@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Permissions\EuEntities;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface;
@@ -18,14 +19,15 @@ final class EuEntitiesResource extends AbstractResource implements EuEntitiesRes
 {
     public function __construct(
         private readonly HttpClientInterface $client,
-        private readonly ExceptionHandlerInterface $exceptionHandler
+        private readonly ExceptionHandlerInterface $exceptionHandler,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
     public function administration(): AdministrationResource
     {
         try {
-            return new AdministrationResource($this->client, $this->exceptionHandler);
+            return new AdministrationResource($this->client, $this->exceptionHandler, $this->valinorCache);
         } catch (Throwable $throwable) {
             throw $this->exceptionHandler->handle($throwable);
         }
@@ -35,7 +37,7 @@ final class EuEntitiesResource extends AbstractResource implements EuEntitiesRes
     {
         try {
             if ($request instanceof GrantsRequest === false) {
-                $request = GrantsRequest::from($request);
+                $request = GrantsRequest::from($request, $this->valinorCache);
             }
 
             return (new GrantsHandler($this->client))->handle($request);

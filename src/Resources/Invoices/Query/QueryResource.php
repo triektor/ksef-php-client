@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources\Invoices\Query;
 
+use CuyZ\Valinor\Cache\Cache;
 use N1ebieski\KSEFClient\Contracts\Exception\ExceptionHandlerInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\HttpClientInterface;
 use N1ebieski\KSEFClient\Contracts\HttpClient\ResponseInterface;
@@ -17,7 +18,8 @@ final class QueryResource extends AbstractResource implements QueryResourceInter
 {
     public function __construct(
         private readonly HttpClientInterface $client,
-        private readonly ExceptionHandlerInterface $exceptionHandler
+        private readonly ExceptionHandlerInterface $exceptionHandler,
+        private readonly ?Cache $valinorCache = null
     ) {
     }
 
@@ -25,7 +27,7 @@ final class QueryResource extends AbstractResource implements QueryResourceInter
     {
         try {
             if ($request instanceof MetadataRequest === false) {
-                $request = MetadataRequest::from($request);
+                $request = MetadataRequest::from($request, $this->valinorCache);
             }
 
             return (new MetadataHandler($this->client))->handle($request);

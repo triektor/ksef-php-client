@@ -19,7 +19,7 @@ trait HasFromArray
         $mapper = new MapperBuilder();
 
         if ($cache instanceof Cache) {
-            $mapper->withCache($cache);
+            $mapper = $mapper->withCache($cache);
         }
 
         return $mapper
