@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace N1ebieski\KSEFClient\Resources;
 
+use CuyZ\Valinor\Cache\Cache;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Exception;
@@ -41,7 +42,8 @@ final class ClientResource extends AbstractResource implements ClientResourceInt
         private Config $config,
         private readonly ExceptionHandlerInterface $exceptionHandler,
         private readonly ?LoggerInterface $logger = null,
-        private readonly ?CacheInterface $cache = null
+        private readonly ?CacheInterface $cache = null,
+        private readonly ?Cache $valinorCache = null,
     ) {
     }
 
