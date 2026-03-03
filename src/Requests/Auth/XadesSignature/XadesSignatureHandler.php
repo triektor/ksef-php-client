@@ -54,6 +54,7 @@ final class XadesSignatureHandler extends AbstractHandler
                 headers: [
                     'Content-Type' => 'application/xml',
                     'Accept' => 'application/json',
+                    ...$request->toHeaders()
                 ],
                 parameters: $request->toParameters(),
                 body: $signedXml

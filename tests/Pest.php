@@ -49,7 +49,7 @@ uses(FeatureAbstractTestCase::class)
 
         foreach (['NIP_1', 'NIP_2', 'NIP_3'] as $nip) {
             $client->testdata()->subject()->remove([
-                'nip' => $_ENV[$nip],
+                'subjectNip' => $_ENV[$nip],
             ]);
         }
     })
