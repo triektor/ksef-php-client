@@ -32,11 +32,13 @@ final class ExceptionFactory extends AbstractFactory
         /** @var class-string<Exception> $exceptionNamespace */
         $exceptionNamespace = match (true) {
             $statusCode === 400 => Utility::value(function () use ($exceptionResponse, &$message): string {
+                /** @var object{exception: object{exceptionDetailList: array<int, object{exceptionCode: int, exceptionDescription: string}>}} $exceptionResponse */
                 $message = self::getExceptionMessage($exceptionResponse);
 
                 return BadRequestException::class;
             }),
             $statusCode === 429 => Utility::value(function () use ($exceptionResponse, &$message): string {
+                /** @var object{status: object{code: int, description: string, details: array<int, string>}} $exceptionResponse */
                 $message = self::getStatusMessage($exceptionResponse);
 
                 return RateLimitException::class;
@@ -56,7 +58,6 @@ final class ExceptionFactory extends AbstractFactory
     }
 
     /**
-     *
      * @param object{status: object{code: int, description: string, details: array<int, string>}} $exceptionResponse
      */
     private static function getStatusMessage(object $exceptionResponse): string
