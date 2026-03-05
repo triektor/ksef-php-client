@@ -19,7 +19,8 @@ final class XadesSignatureXmlRequest extends AbstractRequest implements XmlSeria
 
     public function __construct(
         public readonly string $xadesSignature,
-        public readonly Optional | bool $verifyCertificateChain = new Optional()
+        public readonly Optional | bool $verifyCertificateChain = new Optional(),
+        public readonly Optional | bool $enforceXadesCompliance = new Optional(),
     ) {
     }
 
